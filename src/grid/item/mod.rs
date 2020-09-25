@@ -47,6 +47,9 @@ impl PartialEq for Item {
 /// It just makes sense to me to make it easy to compare an `Item::Number` variant to a simple u8. An `Item::Notes` variant will automatically return
 /// `false`.
 impl PartialEq<u8> for Item {
+    /// Returns `true` if an `Item::Number` variant's `value` field equates to the provided `u8` value.
+    ///
+    /// Returns `false` in any other case.
     fn eq(&self, other: &u8) -> bool {
         if let Item::Number { value, .. } = self {
             value == other
