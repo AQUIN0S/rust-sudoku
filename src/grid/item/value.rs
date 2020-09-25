@@ -23,6 +23,12 @@ impl Value {
     }
 }
 
+impl PartialEq<u8> for Value {
+    fn eq(&self, other: &u8) -> bool {
+        &self.0 == other
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -51,6 +57,16 @@ mod tests {
         assert_eq!(lhs, rhs);
 
         let rhs = Value::new(2);
+        assert_ne!(lhs, rhs);
+    }
+
+    #[test]
+    fn compare_u8() {
+        let lhs = Value::new(1);
+        let rhs: u8 = 1;
+        assert_eq!(lhs, rhs);
+
+        let rhs: u8 = 2;
         assert_ne!(lhs, rhs);
     }
 
