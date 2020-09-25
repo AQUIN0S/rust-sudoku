@@ -2,9 +2,12 @@ mod value;
 pub use value::Value;
 
 /// Represents a grid item in a sudoku - essentially one square. An item could contain a list of values which the player thinks may be in the square,
-/// or may contain a value between 1-9 inclusive. The value may be fixed or not - a fixed item represents an unchanging value, such as a number that
-/// was placed by the computer at the start of a sudoku puzzle, which is definitely the right value and cannot be changed. Contrarily, an unfixed value
-/// is one that the player put in, and they can change the value if they change their mind.
+/// or may contain a value between 1-9 inclusive.
+///
+/// The value may be fixed or not - a fixed item represents an unchanging value, such as a number that
+/// was placed by the computer at the start of a sudoku puzzle, which is definitely the right value and cannot be changed.
+///
+/// Contrarily, an unfixed value is one that the player put in, and they can change the value if they change their mind.
 #[derive(Copy, Clone, Debug, Eq)]
 pub enum Item {
     Number {
@@ -41,6 +44,8 @@ impl PartialEq for Item {
     }
 }
 
+/// It just makes sense to me to make it easy to compare an `Item::Number` variant to a simple u8. An `Item::Notes` variant will automatically return
+/// `false`.
 impl PartialEq<u8> for Item {
     fn eq(&self, other: &u8) -> bool {
         if let Item::Number { value, .. } = self {
