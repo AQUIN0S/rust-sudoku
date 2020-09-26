@@ -120,10 +120,14 @@ impl fmt::Display for Item {
                 write!(f, "{}", value.get())
             },
             Item::Notes(noted_values) => {
-                let noted_values = noted_values.iter().map(|| {
-
-                }).collect();
-                write!(f, "[")
+                let noted_values = noted_values.iter().filter_map(|value| {
+                    if let Some(value) = *value {
+                        Some(value.get().to_string())
+                    } else {
+                        None
+                    }
+                }).collect::<Vec<String>>().join(", ");
+                write!(f, "[{}]", noted_values)
             },
         }
     }

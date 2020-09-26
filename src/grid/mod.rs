@@ -44,6 +44,19 @@ impl SudokuGrid {
     }
 }
 
+use std::fmt;
+
+impl fmt::Display for SudokuGrid {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        for row in self.numbers.iter() {
+            writeln!(f, "{}", row.iter().map(|item| {
+                "hi"
+            }).collect::<Vec<String>>());
+        }
+        Ok(())
+    }
+}
+
 // use std::fmt::{ Display, Formatter, Result };
 // use ansi_term::Colour;
 
