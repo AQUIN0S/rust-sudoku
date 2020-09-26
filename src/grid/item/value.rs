@@ -3,6 +3,11 @@
 pub struct Value(u8);
 
 impl Value {
+
+    /// Creates a new Value type
+    ///
+    /// # Panics
+    /// Panics when the provided value is not 1-9.
     pub fn new(value: u8) -> Value {
         if value > 0 && value < 10 {
             return Value(value)
