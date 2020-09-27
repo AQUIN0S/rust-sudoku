@@ -9,7 +9,6 @@ pub use value::Value;
 ///
 /// Contrarily, an unfixed value is one that the player put in, and they can change the value if they change their mind.
 #[derive(Copy, Clone, Debug, Eq)]
-#[allow(dead_code)]
 pub enum Item {
     Number {
         fixed: bool,
@@ -18,7 +17,6 @@ pub enum Item {
     Notes([Option<Value>; 9]),
 }
 
-#[allow(dead_code)]
 impl Item {
     pub fn set_fixed_number(&mut self, value: u8) {
         let (value, fixed) = (Value::new(value), true);

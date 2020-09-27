@@ -4,7 +4,7 @@ use item::Item;
 
 #[derive(Debug)]
 pub struct SudokuGrid {
-    pub numbers: [[Item; 9]; 9],
+    pub sudoku: [[Item; 9]; 9],
 }
 
 // SudokuGrid {
@@ -26,12 +26,23 @@ impl SudokuGrid {
 
     pub fn new() -> SudokuGrid {
         SudokuGrid {
-            numbers: [[Item::Notes([None; 9]); 9]; 9],
+            sudoku: [[Item::Notes([None; 9]); 9]; 9],
         }
     }
 
     pub fn generate_example_solution() -> SudokuGrid {
         let mut example_grid = SudokuGrid::new();
+        for i in 1..10 {
+            example_grid.sudoku[0][i - 1].toggle_number(i as u8, true);
+            example_grid.sudoku[1][(i + 5) % 9].toggle_number(i as u8, true);
+            example_grid.sudoku[2][(i + 2) % 9].toggle_number(i as u8, true);
+            example_grid.sudoku[3][(i + 7) % 9].toggle_number(i as u8, true);
+            example_grid.sudoku[4][(i + 4) % 9].toggle_number(i as u8, true);
+            example_grid.sudoku[5][(i + 1) % 9].toggle_number(i as u8, true);
+            example_grid.sudoku[6][(i + 6) % 9].toggle_number(i as u8, true);
+            example_grid.sudoku[7][(i + 3) % 9].toggle_number(i as u8, true);
+            example_grid.sudoku[8][i % 9].toggle_number(i as u8, true);
+        }
         example_grid
     }
 
@@ -42,18 +53,32 @@ impl SudokuGrid {
             panic!("Solution value {:?} is not actually a fixed value item. Think hard about what you've done!", solution);
         }
     }
+
+    pub fn toggle_note(&mut self, value: u8, row: usize, col: usize) {
+        self.sudoku[row][col].toggle_note(value);
+    }
+
+    pub fn toggle_number(&mut self, value: u8, row: usize, col: usize) {
+        self.sudoku[row][col].toggle_number(value, false);
+    }
+
+    pub fn set_fixed_number(&mut self, value: u8, row: usize, col: usize) {
+        self.sudoku[row][col].set_fixed_number(value);
+    }
 }
 
 use std::fmt;
 
 impl fmt::Display for SudokuGrid {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        for row in self.numbers.iter() {
-            writeln!(f, "{}", row.iter().map(|item| {
-                "hi"
-            }).collect::<Vec<String>>());
+        let mut sudoku_string = String::new();
+        for row in self.sudoku.iter() {
+            sudoku_string.push_str(row.iter().map(|item| {
+                item.to_string()
+            }).collect::<Vec<String>>().join(", ").as_str());
+            sudoku_string.push_str("\n");
         }
-        Ok(())
+        write!(f, "{}", sudoku_string)
     }
 }
 
